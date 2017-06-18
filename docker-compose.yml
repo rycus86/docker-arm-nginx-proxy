@@ -3,8 +3,6 @@ services:
   nginx:
     image: rycus86/arm-nginx:aarch64
     container_name: nginx
-    networks:
-      - nginx-proxy-network
     volumes:
       - nginx-config:/etc/nginx/conf.d
     ports:
@@ -14,15 +12,15 @@ services:
     image: rycus86/arm-docker-gen:aarch64
     container_name: nginx-gen
     command: -notify-sighup nginx -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
-    networks:
-      - nginx-proxy-network
     volumes:
       - nginx-config:/etc/nginx/conf.d
       - ./nginx-proxy.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
+  sample:
+    image: sample/app
+    environment:
+      - VIRTUAL_HOST=app.sample.local
+
 volumes:
   nginx-config:
-
-networks:
-  nginx-proxy-network:
