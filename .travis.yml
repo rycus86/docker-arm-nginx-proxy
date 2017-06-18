@@ -6,14 +6,9 @@ services:
 script:
 # setup QEMU
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-# build nginx image
+# build images
 - docker build -t nginx:$DOCKER_TAG -f Dockerfile.nginx.$DOCKER_ARCH .
-# test nginx image
-- docker run --rm -it nginx:$DOCKER_TAG nginx -v | grep 'nginx version'
-# build docker-gen image
 - docker build -t docker-gen:$DOCKER_TAG -f Dockerfile.docker-gen.$DOCKER_ARCH .
-# test docker-gen image
-- docker run --rm -it docker-gen:$DOCKER_TAG -version | grep '0.7.3'
 # push images
 - >
   docker login -u="rycus86" -p="$DOCKER_PASSWORD"
