@@ -21,6 +21,8 @@ services:
     image: sample/app
     environment:
       - VIRTUAL_HOST=app.sample.local
+    expose:
+      - "8080"
 
 volumes:
   nginx-config:
