@@ -10,12 +10,12 @@ script:
 - docker build -t nginx:$DOCKER_TAG -f Dockerfile.nginx.$DOCKER_ARCH .
 - docker build -t docker-gen:$DOCKER_TAG -f Dockerfile.docker-gen.$DOCKER_ARCH .
 # push images
+- docker login -u="rycus86" -p="$DOCKER_PASSWORD"
+- docker tag nginx:$DOCKER_TAG rycus86/arm-nginx:$DOCKER_TAG
+- docker tag docker-gen:$DOCKER_TAG rycus86/arm-docker-gen:$DOCKER_TAG
+- docker push rycus86/arm-nginx:$DOCKER_TAG
+- docker push rycus86/arm-docker-gen:$DOCKER_TAG
 - >
-  docker login -u="rycus86" -p="$DOCKER_PASSWORD"
-  docker tag nginx:$DOCKER_TAG rycus86/arm-nginx:$DOCKER_TAG
-  docker tag docker-gen:$DOCKER_TAG rycus86/arm-docker-gen:$DOCKER_TAG
-  docker push rycus86/arm-nginx:$DOCKER_TAG
-  docker push rycus86/arm-docker-gen:$DOCKER_TAG
   if [ "$LATEST" == "true" ]; then
     docker tag nginx:$DOCKER_TAG rycus86/arm-nginx:latest
     docker tag docker-gen:$DOCKER_TAG rycus86/arm-docker-gen:latest
