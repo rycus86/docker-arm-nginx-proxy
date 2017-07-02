@@ -1,5 +1,7 @@
 FROM rycus86/armhf-alpine-qemu
 
+LABEL maintainer "Viktor Adam <rycus86@gmail.com>"
+
 RUN apk add --no-cache ca-certificates bash wget \
     && update-ca-certificates
 

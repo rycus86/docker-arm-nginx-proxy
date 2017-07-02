@@ -1,5 +1,7 @@
 FROM rycus86/arm64v8-alpine-qemu
 
+LABEL maintainer "Viktor Adam <rycus86@gmail.com>"
+
 RUN apk add --no-cache nginx libaio
 
 # Configure Nginx and apply fix for very long server names
